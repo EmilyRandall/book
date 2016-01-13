@@ -18,6 +18,15 @@
       <div class="container">
 
         <h1>My Team's ToDos App</h1>
+        <ul>
+          <li>lily Ji</li>
+          <li>hui-min lu</li>
+          <li>Emily Randall</li>
+          <li>Varshini Jagannath </li>
+          <li>Yue Zhang </li>
+          <li> Yadira Valadeez </li>
+
+	</ul>
 
         <h2>Tasks</h2>
         <ul class="collection" id="tasks">
@@ -28,13 +37,13 @@
       <script>
 
         // create a firebase reference to the root
-        var ref = new Firebase('https://hello-ucdd2.firebaseio.com/')
+        var ref = new Firebase('https://shining-fire-9960.firebaseio.com/')
 
         // read data from the location todos/tasks, only once
         ref.child('todos/tasks').once('value', function(snapshot){
           var tasks = snapshot.val()
           tasks.forEach(function(task){
-            $('#tasks').append('<li class="collection-item">' + task + '</li>')
+            $('#tasks').append('<li class="card-panel teal">' + task + '</li>')
           })
         })
       </script>
