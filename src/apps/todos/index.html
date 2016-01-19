@@ -39,14 +39,41 @@
         </ul>
 
       </div>
+      
+      <!-- <a href="high.html">High</a>
+      <a href="medium.html">Medium</a>
+      <a href="low.html">Low</a> -->
+      
+      <div class="row">
+        <div class="col s12">
+          <ul class="tabs">
+            <li class="tab col s3"><a href="#high">High Priority</a></li>
+            <li class="tab col s3"><a href="#medium">Medium Priority</a></li>
+            <li class="tab col s3"><a href="#low">Low Priority</a></li>
+          </ul>
+        </div>
+        <div id="high" class="col s12">
+          <ul class="collection" id="high-pri"></ul>
+        </div>
+        <div id="medium" class="col s12">
+          <ul class="collection" id="med-pri"></ul>
+        </div>
+        <div id="low" class="col s12">
+          <ul class="collection" id="low-pri"></ul>
+        </div>
+      </div>
+        
 
       <script>
 
         // create a firebase reference to the root
         var ref = new Firebase('https://shining-fire-9960.firebaseio.com/')
 
-        // read data from the location todos/tasks, only once
-        ref.child('todos/tasks').once('value', function(snapshot){
+        // read data from the location todos/tasks
+        ref.child('todos/tasks').on('value', function(snapshot){
+          $('#high-pri').empty();
+          $('#med-pri').empty();
+          $('#low-pri').empty();
           var tasks = snapshot.val();
           tasks.forEach(function(task){
             var card ='<li class="card light-blue lighten-3 z-depth-3 dismissable"><div class="card-content"><span class="card-title">';
@@ -57,7 +84,15 @@
               }
             })
             card += '</div></li>';
-            $('#tasks').append(card);
+            if (task.priority === 0) {
+              $('#high-pri').append(card);
+            }
+            else if (task.priority === 1) {
+              $('#med-pri').append(card);
+            }
+            else {
+              $('#low-pri').append(card);
+            }
           })
         })
       </script>
