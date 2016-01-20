@@ -35,7 +35,7 @@
           var tasks = snapshot.val();
           tasks.forEach(function(task){
             console.log(task.priority);
-            if (task.priority === 0) {
+            if (task.priority === 'high') {
                 var card ='<li class="card light-blue lighten-3 z-depth-3 dismissable"><div class="card-content"><span class="card-title">';
                 card += task.title + '</span>';
                 Object.keys(task).forEach(function(key) {

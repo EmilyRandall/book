@@ -18,6 +18,8 @@
       <div class="container">
 
         <h1> Adding a Task </h1>
+        
+        <a class="waves-effect waves-light btn" href="index.html">Return to task list</a>
 
         <div class="row">
           <div class="input-field col s12">
@@ -37,8 +39,27 @@
              <label>Priority</label>
            </div>
         </div>
-
-        <!-- TODO: add more form controls for entering task data -->
+        
+        <div class="row">
+          <div class="input-field col s12">
+            <input value="" id="type" type="text" class="validate">
+            <label for="type">Type</label>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="input-field col s12">
+            <input value="" id="assigned" type="text" class="validate">
+            <label for="assigned">Assigned</label>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="input-field col s12">
+            <input value="" id="date" type="date" class="datepicker">
+            <label for="date">Due date</label>
+          </div>
+        </div>
 
         <div class="row">
           <div class="input-field col s12">
@@ -49,36 +70,52 @@
 
       <script>
 
-        var root = new Firebase('https://ucdd2-book.firebaseio.com/')
+        var root = new Firebase('https://shining-fire-9960.firebaseio.com/')
         var taskListRef = root.child('todos/tasks')
 
         $('#submit').click(function(){
-          console.log('the submit button is clicked')
+          var title = $('#title').val();
 
-          var title = $('#title').val()
-          console.log('the title is', title)
-
-          var priority = $('#priority').val()
-          console.log('the priority is', priority)
-
-          // TODO: retrieve more fields from form inputs
-
-          // TODO: add more fields to taskObject
-          var taskObject = {
-            title: title
+          var priority;
+          switch($('#priority').val()) {
+            case '1':
+              priority = 'High';
+              break;
+            case '2':
+              priority = 'Medium';
+              break;
+            default:
+              priority = 'Low';
+              break;
           }
+          
+          var type = $('#type').val();
+          var date = $('#date').val();
+          var assigned = $('#assigned').val();
 
-          // TODO: add logic to validate form data before pushing the
-          // data to firebase, only push/set if the required fields are not empty
-
-          // TODO: study why push() and set() are both necessary
-          var newTaskRef = taskListRef.push()
-          newTaskRef.set(taskObject)
+          var taskObject = {
+            deadline: date,
+            priority: priority,
+            title: title,
+            type: type,
+            assigned: assigned,
+            completed: false
+          };
+          
+          if (title != "" && date != "") {
+            taskListRef.push().set(taskObject);
+          }
+          
+          location.href = 'index.html';
         })
 
         // IMPORTANT!! initialize materializecss select
         $(document).ready(function() {
           $('select').material_select();
+          $('.datepicker').pickadate({
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 15 // Creates a dropdown of 15 years to control year
+          });
         });
       </script>
     </body>
