@@ -16,18 +16,42 @@
       <script src="https://cdn.firebase.com/js/client/2.3.2/firebase.js"></script>
 
       <div class="container">
-
+        
         <h3 class="center-align">Emily Randall</h3>
         
-        <h4>Contact Information</h4>
-        <ul class="collection" id="contact"></ul>
+        <div class="center-align"><a class="waves-effect waves-light btn" href="subscribe.html">Subscribe</a></div>
         
-        <h4>Work Experience</h4>
-        <ul class="collection" id="work">
-        </ul> 
-
-        <h4>Programming Languages</h4>
-        <ul class="collection" id="languages">
+        <ul class="collapsible" data-collapsible="accordion">
+          <li>
+            <h4 class="collapsible-header">Contact Information</h4>
+            <div class="collapsible-body">
+              <ul class="collection" id="contact"></ul>
+            </div>
+          </li>
+        </ul>
+        
+        <div class="row">
+          <div class="col s12">
+            <ul class="tabs">
+              <li class="tab col s3"><a href="#workSection">Work Experience</a></li>
+              <li class="tab col s3"><a href="#taskSection">Tasks</a></li>
+            </ul>
+          </div>
+          <div id="workSection" class="col s12">
+            <ul class="collection" id="work"></ul>
+          </div>
+          <div id="taskSection" class="col s12">
+            <ul class="collection" id="tasks"></ul>
+          </div>
+        </div>
+        
+        <ul class="collapsible" data-collapsible="accordion">
+          <li>
+            <h4 class="collapsible-header">Programming Languages</h4>
+            <div class="collapsible-body">
+              <ul class="collection" id="languages"></ul>
+            </div>
+          </li>
         </ul>
 
       </div>
@@ -35,14 +59,14 @@
       <script>
 
         // create a firebase reference to the root
-        var ref = new Firebase('https://shining-fire-9960.firebaseio.com/')
+        var ref = new Firebase('https://shining-fire-9960.firebaseio.com/');
 
         // read data from the location bio/language, only once
         ref.child('bio/languages').once('value', function(snapshot){
           var languages = snapshot.val();
           languages.forEach(function(language){
             $('#languages').append('<li class="collection-item">' + language + '</li>');
-          })
+          });
         });
         
         // read data from the location bio/contact, only once
@@ -50,10 +74,10 @@
           var info = snapshot.val();
           info.forEach(function(i){
             $('#contact').append('<li class="collection-item">' + i + '</li>');
-          })
+          });
         });
         
-        // read data from the location bio/language, only once
+        // read data from the location bio/work, only once
         ref.child('bio/work').once('value', function(snapshot){
           var jobs = snapshot.val();
           jobs.forEach(function(job){
@@ -66,7 +90,27 @@
             })
             card += '</div></li>';
             $('#work').append(card);
-          })
+          });
+        });
+          
+          // read data from the location bio/work, only once
+        ref.child('todos/tasks').on('value', function(snapshot){
+          var tasks = snapshot.val();
+          $('#tasks').empty();
+          for (var t in tasks) {
+            var task = tasks[t];
+            if (('assigned' in task) && task['assigned'] == 'EmilyRandall') {
+              var card ='<li class="card light-blue lighten-3 z-depth-3 dismissable"><div class="card-content"><span class="card-title">';
+              card += task.title + '</span>';
+              Object.keys(task).forEach(function(key) {
+                if (key != 'title' && key != 'completed' && task[key] != "") {
+                  card += '<p>' + key + ': ' + task[key] + '</p>';
+                }
+              });
+              card += '</div></li>';
+              $('#tasks').append(card);
+            }
+          }
         });
       </script>
     </body>

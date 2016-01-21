@@ -40,17 +40,26 @@
       </div>
 
       <script>
-
+        
+        var root = new Firebase('https://shining-fire-9960.firebaseio.com/');
+        var emailRef = root.child('bio/subscribers');
+        
         $('#submit').click(function(){
-          console.log('the submit button is clicked')
-
-          // TODO: add code to submit an email address to your own Firebase
-
-        })
-
-
-        // TODO: add code to pull emaill addresses from your own Firebase,
-        // and populate "#emails" with these email addresses
+          var email = $('#email').val();
+          emailRef.push().set({
+            email: email
+          });
+          location.href = 'index.html';
+        });
+        
+        emailRef.on('value', function(snapshot){
+          $('#emails').empty();
+          var emails = snapshot.val();
+          for (var key in emails) {
+            var email = emails[key];
+            $('#emails').append('<li class="collection-item">' + email['email'] + '</li>');
+          }
+        });
 
 
       </script>
