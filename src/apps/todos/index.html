@@ -23,12 +23,12 @@
             <div class="collapsible-header">Group members</div>
             <div class="collapsible-body">
               <ul class="collection">
-                <li class="collection-item">lily Ji</li>
+                <li class="collection-item">lili Ji</li>
                 <li class="collection-item">hui-min lu</li>
                 <li class="collection-item">Emily Randall</li>
                 <li class="collection-item">Varshini Jagannath </li>
-                <li class="collection-item">Yue Zhang </li>
-                <li class="collection-item"> Yadira Valadeez </li>
+                <li class="collection-item">Kavya Ravikumar</li>
+                <li class="collection-item">Yadira Valadez</li>
               </ul>
             </div>
           </li>
@@ -69,7 +69,6 @@
         var ref = new Firebase('https://shining-fire-9960.firebaseio.com/');
         
         var markAsCompleted = function(key) {
-          console.log(key);
           ref.child('todos/tasks').child(key).update({
             completed: true
           });
