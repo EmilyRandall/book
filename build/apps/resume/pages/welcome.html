@@ -1,0 +1,51 @@
+<h3>Welcome!</h3>
+
+<div class="row">
+  <div class="col s4">
+    <div class="card">
+      <div class="card-image">
+        <a href="#" id="resume"><img src="images/boulder.jpg"></a>
+        <span class="card-title">Resume</span>
+      </div>
+      <div class="card-content">
+        <p>Week 1 resume assignment.</p>
+      </div>
+    </div>
+  </div>
+  <div class="col s4">
+    <div class="card">
+      <div class="card-image">
+        <a href="#" id="tasks"><img src="images/milky-way.jpg"></a>
+        <span class="card-title">Tasks</span>
+      </div>
+      <div class="card-content">
+        <p>Week 2 task list assignment.</p>
+      </div>
+    </div>
+  </div>
+  <div class="col s4">
+    <div class="card">
+      <div class="card-image">
+        <a href="#" id="cities"><img src="images/clearing-storm.jpg"></a>
+        <span class="card-title">Cities</span>
+      </div>
+      <div class="card-content">
+        <p>Week 3 city weather assignment.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('#resume').click(function() {
+    showPage('resume');
+  });
+  $('#tasks').click(function() {
+    showPage('tasks');
+  });
+  $('#cities').click(function() {
+    showPage('cities', function() {
+      initMap();
+    });
+  });
+</script>

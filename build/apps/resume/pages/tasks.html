@@ -1,0 +1,33 @@
+<h3 class="center-align">Tasks</h3>
+
+<div class="row">
+  <div id="taskSection" class="col s12">
+    <ul class="collection" id="tasks"></ul>
+  </div>
+</div>
+
+<script>
+
+// create a firebase reference to the root
+var ref = new Firebase('https://shining-fire-9960.firebaseio.com/');
+  
+  // read data from the location todos/tasks, only once
+ref.child('todos/tasks').on('value', function(snapshot){
+  var tasks = snapshot.val();
+  $('#tasks').empty();
+  for (var t in tasks) {
+    var task = tasks[t];
+    if (('assigned' in task) && task['assigned'] == 'EmilyRandall') {
+      var card ='<li class="card light-blue lighten-3 z-depth-3 dismissable"><div class="card-content"><span class="card-title">';
+      card += task.title + '</span>';
+      Object.keys(task).forEach(function(key) {
+        if (key != 'title' && key != 'completed' && task[key] != "") {
+          card += '<p>' + key + ': ' + task[key] + '</p>';
+        }
+      });
+      card += '</div></li>';
+      $('#tasks').append(card);
+    }
+  }
+});
+</script>

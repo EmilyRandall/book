@@ -1,0 +1,42 @@
+<h3 class="center-align">My Favorite Cities</h3>
+<div id="cities" class="row">
+  <div class="col s12">
+    <ul class="tabs">
+      <li class="tab col s2"><a href="#" onclick="loadCity('denver', 'Denver')">Denver</a></li>
+      <li class="tab col s2"><a href="#" onclick="loadCity('seattle', 'Seattle')">Seattle</a></li>
+      <li class="tab col s2"><a href="#" onclick="loadCity('sanfrancisco', 'San Francisco')">San Francisco</a></li>
+      <li class="tab col s2"><a href="#" onclick="loadCity('newyork', 'New York')">New York</a></li>
+      <li class="tab col s2"><a href="#" onclick="loadCity('boston', 'Boston')">Boston</a></li>
+    </ul>
+  </div>
+  <div class="col s12">
+    <div class="col s5" id="city">
+      <div class="card">
+        <div class="card-image waves-effect waves-block waves-light">
+          <img class="activator" id="city-image" src="images/denver.jpg">
+        </div>
+        <div class="card-content">
+          <span class="card-title activator grey-text text-darken-4" id="city-title">Denver Weather<i class="material-icons right">more_vert</i></span>
+        </div>
+        <div class="card-reveal">
+          <span class="card-title grey-text text-darken-4" id="city-title-expanded">Denver Weather<i class="material-icons right">close</i></span>
+          <p id="city-info"></p>
+        </div>
+      </div>
+    </div>
+    <div class="col s7" id="map" style="height:400px">Map</div>  
+  </div>
+</div>
+
+<script>
+  var loadCity = function(cityString, cityName) {
+    var weatherRef = new Firebase('https://publicdata-weather.firebaseio.com/' + cityString);
+    weatherRef.on('value', function(snapshot){
+      var city = snapshot.val();
+      mapCity(city, cityName);
+      displayCity(city, cityString, cityName);
+    });
+  };
+  
+  loadCity('denver', 'Denver');
+</script>

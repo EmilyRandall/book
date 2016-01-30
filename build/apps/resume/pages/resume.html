@@ -1,0 +1,117 @@
+<h3 class="center-align">Resume</h3>
+
+<!-- Modal Trigger -->
+<div class="center-align"><a class="waves-effect waves-light btn modal-trigger" id="subscribe">Subscribe</a></div>
+
+<!-- Modal Structure -->
+<div id="modal1" class="modal">
+  <div class="modal-content">
+    <h4> Subscribe </h4>
+
+    <div class="row">
+      <div class="input-field col s12">
+        <input value="" id="email" type="text" class="validate">
+        <label for="email">Email</label>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="input-field col s12">
+        <a class="waves-effect waves-green btn" id="submit">Submit</a>
+      </div>
+    </div>
+
+    <div class="row">
+      <h3>Current Subscribers</h3>
+      <ul class="collection" id="emails">
+      </ul>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a class="modal-action modal-close waves-effect waves-green btn-flat" id="exit">Exit</a>
+  </div>
+</div>
+
+<p><b>Contact</b></p>
+<ul class="collection" id="contact"></ul>
+
+<p><b>Experience</b></p>
+<div class="row">
+  <div id="workSection" class="col s12">
+    <ul class="collection" id="work"></ul>
+  </div>
+</div>
+
+<p><b>Programming Languages</b></p>
+<ul class="collection" id="languages"></ul>
+
+<script>
+
+// create a firebase reference to the root
+var ref = new Firebase('https://shining-fire-9960.firebaseio.com/');
+
+// read data from the location bio/language, only once
+ref.child('bio/languages').once('value', function(snapshot){
+  var languages = snapshot.val();
+  languages.forEach(function(language){
+    $('#languages').append('<li class="collection-item">' + language + '</li>');
+  });
+});
+
+// read data from the location bio/contact, only once
+ref.child('bio/contact').once('value', function(snapshot){
+  var info = snapshot.val();
+  info.forEach(function(i){
+    $('#contact').append('<li class="collection-item">' + i + '</li>');
+  });
+});
+
+// read data from the location bio/work, only once
+ref.child('bio/work').once('value', function(snapshot){
+  var jobs = snapshot.val();
+  jobs.forEach(function(job){
+    var card ='<li class="card light-blue lighten-3 z-depth-3"><div class="card-content"><span class="card-title">';
+    card += job.Employer + '</span>';
+    Object.keys(job).forEach(function(key) {
+      if (key != 'Employer') {
+        card += '<p>' + key + ': ' + job[key] + '</p>';
+      }
+    })
+    card += '</div></li>';
+    $('#work').append(card);
+  });
+});
+
+var emailRef = ref.child('bio/subscribers');
+
+$('#subscribe').click(function(){
+  $('#modal1').css('display', 'block');
+  $('#modal1').css('z-index', '999');
+});
+
+$('#exit').click(function(){
+  $('#modal1').css('display', 'none');
+});
+
+$('#submit').click(function(){
+  var email = $('#email').val();
+  if (email != "") {
+    emailRef.push().set({
+      email: email
+    });
+    $('#modal1').css('display', 'none');
+  }
+  else {
+    Materialize.toast('Please enter a valid email address', 4000);
+  }
+});
+
+emailRef.on('value', function(snapshot){
+  $('#emails').empty();
+  var emails = snapshot.val();
+  for (var key in emails) {
+    var email = emails[key];
+    $('#emails').append('<li class="collection-item">' + email['email'] + '</li>');
+  }
+});
+</script>
