@@ -97,7 +97,8 @@ $('#exit').click(function(){
 });
 
 window.onclick = function(event) {
-  if (event.target !== document.getElementById('modal1') && event.target !== document.getElementById('subscribe')) {
+  var b = document.getElementById('modal1').contains(event.target);
+  if (event.target !== document.getElementById('modal1') && event.target !== document.getElementById('subscribe') && !b) {
     $('#modal1').css('display', 'none');
   }
 }
