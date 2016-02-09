@@ -1,0 +1,46 @@
+.leaflet-container {
+  height: 400px;
+  width: 80%;
+  margin: 0 auto;
+}
+
+body {
+  background-image: url("../images/background.jpg");
+  background-position: left top;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.brand-logo {
+  margin-left: 15px;
+}
+
+.card {
+  padding: 10px 15px;
+  border: 1px solid black;
+  background-color:rgba(255, 255, 255, 0.8);
+}
+
+label {
+  color: #595959;
+}
+
+.input-field label {
+  color: #595959;
+}
+
+.input-field label.active {
+  color: #072070;
+}
+
+select {
+  display: inherit;
+}
+
+.btn {
+  margin-top: 20px;
+}
+
+.slider {
+  margin-bottom: 25px;
+}
