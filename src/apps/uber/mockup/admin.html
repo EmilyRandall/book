@@ -16,8 +16,8 @@
       <script src="https://cdn.firebase.com/js/client/2.3.2/firebase.js"></script>
 		
 		<nav>
-			<div class="nav-wrapper">
-				<a id="name" href="index.html" class="brand-logo left">RIDESKI</a>
+			<div class="nav-wrapper teal lighten-2">
+				<a id="name" href="index.html" class="brand-logo center">RIDESKI</a>
 				
 				<ul id="navbar" class="right hide-on-med-and-down">
 					<li><a href="admin.html">Admin</a></li>
@@ -26,11 +26,24 @@
 			</div>
 		</nav>
     
-    <h1>Clients</h1>
-		<ul class="collection" id="clients"></ul>	
+    <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+      <a class="btn-floating btn-large teal lighten-2" href="#map-mockup">
+        <i class="large material-icons">language</i>
+      </a>
+      <ul>
+        <li><a class="btn-floating teal lighten-1" href="index.html"><i class="material-icons">assignment</i></a></li>
+        <li><a class="btn-floating teal lighten-1" href="admin.html"><i class="material-icons">perm_identity</i></a></li>
+        <li><a class="btn-floating teal lighten-1" href="client.html"><i class="material-icons">grade</i></a></li>
+      </ul>
+    </div>
     
-    <h1>Drivers</h1>
-		<ul class="collection" id="drivers"></ul>
+    <div class="container">
+      <h1>Clients</h1>
+      <ul class="collection" id="clients"></ul>	
+      
+      <h1>Drivers</h1>
+      <ul class="collection" id="drivers"></ul>
+    </div>
     <script>
     // create a firebase reference to the root
         var fire = new Firebase('https://rideski.firebaseio.com')
@@ -40,9 +53,9 @@
 				$('#clients').append(''+
 				  '<div class="row">'+
 					'<div class="col s12">'+
-					  '<div class="card hoverable blue-grey darken-1">'+
-						'<div class="card-content white-text">'+
-						  '<span class="card-title">'+Client.name+'</span>'+
+					  '<div class="card hoverable green accent-1">'+
+						'<div class="card-content black-text">'+
+						  '<span class="card-title"><b>'+Client.name+'</b></span>'+
               '<p>Client Name: '+Client.name+' </p> '+
               '<p>Destination: '+Client.dest+' </p> '+
               '<p>Departure Time: '+Client.departure+' </p> '+
@@ -61,9 +74,9 @@
 				$('#drivers').append(''+
 				  '<div class="row">'+
 					'<div class="col s12">'+
-					  '<div class="card hoverable blue-grey darken-1">'+
-						'<div class="card-content white-text">'+
-						  '<span class="card-title">'+Driver.name+'</span>'+
+					  '<div class="card hoverable green accent-1">'+
+						'<div class="card-content black-text">'+
+						  '<span class="card-title"><b>'+Driver.name+'</b></span>'+
               '<p>Driver Name: '+Driver.name+' </p> '+
               '<p>Destination: '+Driver.dest+' </p> '+
               '<p>Departure Time: '+Driver.departure+' </p> '+
