@@ -1,1 +1,81 @@
-TODO
+<!DOCTYPE html>
+  <html>
+    <head>
+      <!--Import Google Icon Font-->
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!--Import materialize.css-->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+
+    <body>
+      <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+      <script src="https://cdn.firebase.com/js/client/2.3.2/firebase.js"></script>
+		
+		<nav>
+			<div class="nav-wrapper">
+				<a id="name" href="index.html" class="brand-logo left">RIDESKI</a>
+				
+				<ul id="navbar" class="right hide-on-med-and-down">
+					<li><a href="admin.html">Admin</a></li>
+          <li><a href="client.html">Client</a></li>
+				</ul>
+			</div>
+		</nav>
+    
+    <h1>Clients</h1>
+		<ul class="collection" id="clients"></ul>	
+    
+    <h1>Drivers</h1>
+		<ul class="collection" id="drivers"></ul>
+    <script>
+    // create a firebase reference to the root
+        var fire = new Firebase('https://rideski.firebaseio.com')
+			fire.child('Client').on('value', function(snapshot){
+			  var clients = snapshot.val();
+			  clients.forEach(function(Client){
+				$('#clients').append(''+
+				  '<div class="row">'+
+					'<div class="col s12">'+
+					  '<div class="card hoverable blue-grey darken-1">'+
+						'<div class="card-content white-text">'+
+						  '<span class="card-title">'+Client.name+'</span>'+
+              '<p>Client Name: '+Client.name+' </p> '+
+              '<p>Destination: '+Client.dest+' </p> '+
+              '<p>Departure Time: '+Client.departure+' </p> '+
+						  '<p>Return Time: '+Client.return+' </p> '+
+						  '<p>Party Size: ' + Client.party+'</p>'+
+						'</div>'+
+					  '</div>'+
+					'</div>' +
+					'</div>'
+			  )}
+			)})
+      
+      fire.child('Driver').on('value', function(snapshot){
+			  var drivers = snapshot.val();
+			  drivers.forEach(function(Driver){
+				$('#drivers').append(''+
+				  '<div class="row">'+
+					'<div class="col s12">'+
+					  '<div class="card hoverable blue-grey darken-1">'+
+						'<div class="card-content white-text">'+
+						  '<span class="card-title">'+Driver.name+'</span>'+
+              '<p>Driver Name: '+Driver.name+' </p> '+
+              '<p>Destination: '+Driver.dest+' </p> '+
+              '<p>Departure Time: '+Driver.departure+' </p> '+
+						  '<p>Return Time: '+Driver.return+' </p> '+
+						  '<p>Available Seats: ' + Driver.aval_seat+'</p>'+
+						'</div>'+
+					  '</div>'+
+					'</div>' +
+					'</div>'
+			  )}
+			)})
+    </script>
+  </body>
+</html>
+
