@@ -1,45 +1,26 @@
+class Map extends React.Component {
 
-const {Map, Marker, CircleMarker, Popup, TileLayer, MapLayer}  = window.ReactLeaflet
-
-class MapView extends React.Component {
   render(){
-
-    const providers = this.props.providers
-    const providerElements = _.map(providers, function(p,i){
-      return <Marker position={p.pos} key={i}>
-        <Popup>
-          <span>{JSON.stringify(p)}</span>
-        </Popup>
-      </Marker>
-    })
-
-    let userElement
-    if (this.props.user){
-      userElement = <CircleMarker center={this.props.user.pos}/>
-    } else {
-      userElement = ''
-    }
-
-    // Note: .bind(this) is important for the handler function's 'this'
-    // pointer to refer to this MapView instance
-
-    return  <Map center={this.props.center}
-          zoom={13}
-          onLeafletClick={this.handleLeafletClick.bind(this)}>
-        <TileLayer
-          url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
-          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-        />
-        {providerElements}
-        {userElement}
-      </Map>
+    return (
+      <div>
+        <p className="center-align"><b>{this.props.title}</b></p>
+        <div id="map" style={{'height':'400px'}}>Map</div>
+      </div>
+    );
+  }
+  
+  componentDidMount() {
+    var mapDiv = document.getElementById('map');
+    initMap(mapDiv);
+    
+    var root = new Firebase('https://rideski.firebaseio.com/');
+    var isDriver = this.props.src === 'Drivers';
+    root.child(this.props.src).on('value', function(snapshot){
+      var clients = snapshot.val();
+      showClients(clients, isDriver);
+    });
   }
 
-
-  handleLeafletClick(event){
-    console.log('leaflet click event', event)
-    this.props.setUserLocationAction(event.latlng)
-  }
 }
+MyComponents.Map = Map
 
-MyComponents.MapView = MapView

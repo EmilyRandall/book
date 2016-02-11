@@ -2,7 +2,7 @@ class Driver extends React.Component {
 
   render(){
     return (
-      <div className="row">
+      <div className="row" id="driver-form">
         <p className="center-align"><b>Sign Up as a Driver</b></p>
         <form className="col s12">
           <div className="row">
@@ -29,15 +29,15 @@ class Driver extends React.Component {
           </div>
           <div className="input-field col s12">
             <select name="dropdown" id="ski-area" defaultValue="0">
-              <option value="0">Choose ski area</option>
-              <option value="1">Winter Park</option>
-              <option value="2">Copper</option>
-              <option value="3">Keystone</option>
-              <option value="4">Vail</option>
-              <option value="5">Breckenridge</option>
-              <option value="6">Loveland</option>
-              <option value="7">Eldora</option>
-              <option value="8">A-Basin</option>
+              <option value="">Choose ski area</option>
+              <option value="Winter Park">Winter Park</option>
+              <option value="Copper">Copper</option>
+              <option value="Keystone">Keystone</option>
+              <option value="Vail">Vail</option>
+              <option value="Breckenridge">Breckenridge</option>
+              <option value="Loveland">Loveland</option>
+              <option value="Eldora">Eldora</option>
+              <option value="A-Basin">A-Basin</option>
             </select>
           </div>
           <div className="center-align submit"><a className="waves-effect waves-light btn">Submit</a></div>
@@ -75,6 +75,49 @@ class Driver extends React.Component {
        decimals: 0,
 	   postfix: ' PM',
      })
+    });
+    
+    var root = new Firebase('https://rideski.firebaseio.com/');
+    var taskListRef = root.child('Drivers');
+    var geocoder = new google.maps.Geocoder();
+
+    $('.submit').click(function(){
+      var myname = $('#first_name').val() + " " + $('#last_name').val();
+      var departure = dslider.noUiSlider.get()[0] + " - " + dslider.noUiSlider.get()[1];
+      var dest = $('#ski-area').val();
+      var passengers = $('#passengers').val();
+      var returnt = rslider.noUiSlider.get()[0] + " - " + rslider.noUiSlider.get()[1];
+      
+      var address = $('#address').val();
+      geocoder.geocode( { 'address': address}, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+          var lat = results[0].geometry.location.lat();
+          var lon = results[0].geometry.location.lng();
+          
+          if (myname !== "" && departure !== "" && dest !== "" && passengers !== "" && returnt !== "") {
+            var taskObject = {
+                departure: departure,
+                dest: dest,
+                lat: lat,
+                lon: lon,
+                name: myname,
+                seating: passengers,
+                returnt: returnt
+            }
+      
+            var newTaskRef = taskListRef.push();
+            newTaskRef.set(taskObject);
+            
+            $('#driver-form').html('<p>Thank you!</p>');
+          }
+          else {
+            Materialize.toast('Please fill in every part of the form', 4000);
+          }
+          
+        } else {
+          Materialize.toast('Please enter a valid address', 4000);
+        }
+      });
     });
   }
 

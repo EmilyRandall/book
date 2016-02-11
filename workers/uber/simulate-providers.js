@@ -2,13 +2,13 @@ var _ = require('lodash')
 var random_name = require('node-random-name');
 var Firebase = require('firebase');
 
-// San Francisco
+// Denver
 var city_location = {
-  lat: 37.78,
-  lon: -122.41
+  lat: 39.73,
+  lon: -104.98
 }
 
-var radius = 0.03
+var radius = 0.5
 
 // simualate a random person entering, staying for a duration, and leaving
 function simulate(){
@@ -51,10 +51,11 @@ function enter(person){
   console.log('enter', person)
   // TODO: put this person in the Firebase
   var ref = new Firebase('https://rideski.firebaseio.com/Drivers')
-  ref.child(person.name).set({
+  ref.push().set({
         lat: person.lat,
         lon: person.lon,
         dest: person.dest,
+        name: person.name,
         departure: person.departure,
         returnt: person.returnt,
         seating: person.seating

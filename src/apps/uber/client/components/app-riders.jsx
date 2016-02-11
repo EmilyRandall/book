@@ -20,11 +20,9 @@ class AppRiders extends React.Component {
           </div>
           <div className="col s6">
             <div className="card">
-              <MyComponents.MapView
-                  providers={this.props.data.providers}
-                  center={this.props.data.center}
-                  user={this.props.data.user}
-                  setUserLocationAction={this.props.actions.setUserLocation}/>
+              <MyComponents.Map
+                  title="Current Drivers"
+                  src="Drivers"/>
             </div>
           </div>
         </div>

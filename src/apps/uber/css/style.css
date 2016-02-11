@@ -33,6 +33,11 @@ label {
   color: #072070;
 }
 
+.input-field input.valid {
+  border-bottom: 1px solid #072070;
+  box-shadow: 0px 1px 0px 0px #072070;
+}
+
 select {
   display: inherit;
 }
