@@ -2,57 +2,164 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>Riders</title>
+    <title>Client</title>
 
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css">
-    
-    <link rel="stylesheet" href="../../../css/nouislider.css">
-    <link rel="stylesheet" href="../css/style.css">
-
-
-    <script src="https://cdn.firebase.com/js/client/2.3.2/firebase.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.0.0/lodash.min.js"></script>
-
-    <script src="../lib/react.js"></script>
-    <script src="../lib/react-dom.js"></script>
-    <script src="../../../js/nouislider.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
-
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script>
-    <!-- https://github.com/PaulLeCam/react-leaflet -->
-    <script src="https://npmcdn.com/react-leaflet/dist/react-leaflet.min.js"></script>
-
   </head>
   <body>
-    <div id="app-container">
+    <script src="https://cdn.firebase.com/js/client/2.3.2/firebase.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.0.0/lodash.min.js"></script>
+    
+    <nav>
+      <div class="nav-wrapper teal lighten-2">
+        <a id="name" href="index.html" class="brand-logo center">RIDESKI</a>
+        <ul id="navbar" class="right hide-on-med-and-down">
+          <li><a href="admin.html">Admin</a></li>
+          <li><a href="riders.html">Riders</a></li>
+          <li><a href="driver.html">Drivers</a></li>
+        </ul>
+      </div>
+    </nav>
+    
+    <div class="container">
+      <div class="row">
+        <h3 class="center-align">Rider Input</h3>
+        <form class="col s12">
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="myname" type="text" class="validate">
+              <label for="myname">Name</label>
+            </div>
+          </div>
+
+          <div class="input-field col s12">
+            <input id="passengers" type="text" class="validate">
+            <label for="passengers">Number of Passengers</label>
+          </div>
+
+          <div class="input-field col s12">
+            <p>If you don't know your lat and lon then please use the <a href="http://www.latlong.net/Show-Latitude-Longitude.html">Address Finder</a></p></br>
+          </div>
+
+          <div class="input-field col s6">
+            <input id="lat" type="text" class="validate">
+            <label for="lat">What is your Latitude</label>
+          </div>
+
+          <div class="input-field col s6">
+            <input id="lon" type="text" class="validate">
+            <label for="lon">What is your Longitude</label>
+          </div>
+
+           <div class="input-field col s12" >
+            <select id="departure">
+              <option value="" disabled selected>Choose Departure Time</option>
+              <option value="1">5:00 AM</option>
+              <option value="2">6:00 AM</option>
+              <option value="3">7:00 AM</option>
+              <option value="4">8:00 AM</option>
+              <option value="5">9:00 AM</option>
+              <option value="6">10:00 AM</option>
+            </select>
+            <label>Select Time</label>
+          </div>
+
+           <div class="input-field col s12">
+            <select  id="returnt">
+              <option value="" disabled selected>Choose Return Time</option>
+              <option value="1">12:00 AM</option>
+              <option value="2">1:00 AM</option>
+              <option value="3">2:00 AM</option>
+              <option value="4">3:00 AM</option>
+              <option value="5">4:00 AM</option>
+              <option value="6">5:00 AM</option>
+            </select>
+            <label>Select Time</label>
+          </div>
+
+          <div class="input-field col s12">
+            <select id="dest">
+              <option value="" disabled selected>Choose ski area</option>
+              <option value="1">Winter Park</option>
+              <option value="2">Copper</option>
+              <option value="3">Keystone</option>
+              <option value="4">Vail</option>
+              <option value="5">Breckenridge</option>
+              <option value="6">Loveland</option>
+              <option value="7">Eldora</option>
+              <option value="8">A-Basin</option>
+            </select>
+            <label>Select Destination</label>
+          </div>
+
+          <a class="waves-effect waves-light btn" id="submit">Submit</a>
+        </form>
+      </div>
     </div>
 
+
     <script>
-      // MyComponents is a global object where each property is a reference to a component class
-      MyComponents = {}
-    </script>
 
-    <!-- import each component class in components/ -->
-    <!-- The order is important. Dependencies must be loaded first -->
-    <script type="text/babel" src="../components/navbar.jsx"></script>
-    <!--<script type="text/babel" src="components/team.jsx"></script>-->
-    <script type="text/babel" src="components/map.jsx"></script>
-    <script type="text/babel" src="components/user.jsx"></script>
-    <script type="text/babel" src="components/rider.jsx"></script>
+        var root = new Firebase('https://rideski.firebaseio.com/')
+        var taskListRef = root.child('Client')
 
-    <!-- Main app container -->
-    <script type="text/babel" src="components/app-riders.jsx"></script>
+        $('#submit').click(function(){
+          console.log('the submit button is clicked')
 
-    <!-- Connect the app and data -->
-    <script type="text/babel" src="data.jsx"></script>
+          var departure = $('#departure').val()
+          console.log('the departure time is', departure)
+
+          var dest = $('#dest').val()
+          console.log('the destination is', dest)
+
+          var lat = $('#lat').val()
+          console.log('the lat is', lat)
+
+          var lon = $('#lon').val()
+          console.log('the lon is', lon)
+
+          var myname = $('#myname').val()
+          console.log('My name is', myname)
+
+          var passengers = $('#passengers').val()
+          console.log('The party size is', passengers)
+
+          var returnt = $('#returnt').val()
+          console.log('the return time is', returnt)
+
+          var name = {
+                name: myname
+            }
+          var taskObject = {
+                departure: departure,
+                dest: dest,
+                lat: lat,
+                lon: lon,
+                name: myname,
+                party: passengers,
+                returnt: returnt
+          }
+
+          // TODO: study why push() and set() are both necessary
+          var newTaskRef = taskListRef.push()
+          newTaskRef.set(taskObject)
+          
+          
+          //$('#modal1').closeModal();
+        })
+
+        // IMPORTANT!! initialize materializecss select
+        $(document).ready(function() {
+          $('select').material_select();
+        });
+        
+
+      </script>
 
   </body>
 </html>
