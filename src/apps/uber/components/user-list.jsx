@@ -27,6 +27,7 @@ MyComponents.Person = React.createClass({
     var person = this.props.person;
     var dep = person.departure.includes('AM') ? person.departure : person.departure + ' AM';
     var ret = person.returnt.includes('PM') ? person.returnt : person.returnt + ' PM';
+    var cost = person.driver ? 'Cost: ' + getCost(person.dest) : '';
     return (
       <li>
         <div className="collapsible-header">{person.name}</div>
@@ -36,7 +37,8 @@ MyComponents.Person = React.createClass({
               Destination: {person.dest}<br />
               Departure time: {dep}<br />
               Return time: {ret}<br />
-              {this.props.seats}: {person.party}
+              {this.props.seats}: {person.party}<br />
+              {cost}
             </div>
           </div>
         </div>

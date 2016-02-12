@@ -2,6 +2,15 @@ var map;
 var drivers = {};
 var riders = {};
 var both = {};
+var costs = {"Winter Park": "$20",
+            "Copper": "$25",
+            "Keystone": "$20",
+            "Vail": "$30",
+            "Breckenridge": "$25",
+            "Loveland": "$15",
+            "Eldora": "$15",
+            "A-Basin": "$20"};
+            
 function initMap(mapDiv, legendDiv) {
   var denver = {lat: 39.73, lng: -104.98};
   //var boulder = {lat: 40.03, lng: -105.25};
@@ -33,6 +42,15 @@ function initMap(mapDiv, legendDiv) {
   });*/
 }
 
+function getCost(name) {
+  if (name in costs) {
+    return costs[name];
+  }
+  else {
+    return "Cost unknown";
+  }
+}
+
 function showClients(clients, src) {
   var dict;
   if (src === 'Drivers') {
@@ -49,22 +67,29 @@ function showClients(clients, src) {
 
 function show(clients, dict) {
   Object.keys(clients).forEach(function(key) {
+    var c = clients[key];
     if (!(key in dict)) {
-      var c = clients[key];
       var seats = c['driver'] ? 'Open seats' : 'Passengers';
       var icon = c['driver'] ? '../images/blue-marker.png' : '../images/red-marker.png';
+      var cost = c['driver'] ? '<p>Cost: ' + getCost(c['dest']) + '</p>' : '';
       var marker = new google.maps.Marker({
         map: map,
         position: {'lat': c['lat'], 'lng': c['lon']},
         icon: icon
       });
       var infowindow = new google.maps.InfoWindow({
-        content: '<p>' + c['name'] + '</p><p>Destination: ' + c['dest'] + '</p><p>' + seats + ': ' + c['party'] + '</p>'
+        content: '<p>' + c['name'] + '</p><p>Destination: ' + c['dest'] + '</p><p>' + seats + ': ' + c['party'] + '</p>' + cost
       });
       marker.addListener('click', function() {
         infowindow.open(map, marker);
       });
       dict[key] = marker;
+    }
+    else {
+      var oldPos = dict[key].getPosition();
+      if (oldPos.lat() !== c.lat || oldPos.lng !== c.lon) {
+        dict[key].setPosition({lat: c.lat, lng: c.lon});
+      }
     }
   });
   Object.keys(dict).forEach(function(key) {
