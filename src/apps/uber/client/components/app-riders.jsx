@@ -2,7 +2,7 @@ class AppRiders extends React.Component {
   render(){
     return <div>
       <MyComponents.NavBar actions={this.props.actions}/>
-      <div className="container">
+      <div className="container main">
         <div className="card">
           <MyComponents.User
               user={this.props.data.user}
@@ -22,7 +22,9 @@ class AppRiders extends React.Component {
             <div className="card">
               <MyComponents.Map
                   title="Current Drivers"
-                  src="Drivers"/>
+                  src="Drivers"
+                  id="map"
+                  clients={this.props.data.drivers}/>
             </div>
           </div>
         </div>

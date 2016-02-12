@@ -2,7 +2,9 @@
 var data = {
   center: [37.78, -122.41], // San Francisco
   providers: [],
-  users: []
+  users: [],
+  drivers: [],
+  riders: []
 }
 
 // a single 'handlers' object that holds all the actions of your entire app
@@ -44,3 +46,16 @@ firebaseRef.child('providers')
     render()
 
   })
+
+var root = new Firebase('https://rideski.firebaseio.com/');
+var driverRef = root.child('Drivers');
+driverRef.on('value', function(snapshot) {
+  data.drivers = snapshot.val();
+  render();
+});
+
+var riderRef = root.child('Client');
+riderRef.on('value', function(snapshot) {
+  data.riders = snapshot.val();
+  render();
+});

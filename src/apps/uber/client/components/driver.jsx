@@ -78,7 +78,7 @@ class Driver extends React.Component {
     });
     
     var root = new Firebase('https://rideski.firebaseio.com/');
-    var taskListRef = root.child('Drivers');
+    var driverRef = root.child('Drivers');
     var geocoder = new google.maps.Geocoder();
 
     $('.submit').click(function(){
@@ -101,11 +101,12 @@ class Driver extends React.Component {
                 lat: lat,
                 lon: lon,
                 name: myname,
-                seating: passengers,
-                returnt: returnt
+                party: passengers,
+                returnt: returnt,
+                driver: true
             }
       
-            var newTaskRef = taskListRef.push();
+            var newTaskRef = driverRef.push();
             newTaskRef.set(taskObject);
             
             $('#driver-form').html('<p>Thank you!</p>');

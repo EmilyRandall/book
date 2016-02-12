@@ -58,7 +58,8 @@ function enter(person){
         name: person.name,
         departure: person.departure,
         returnt: person.returnt,
-        seating: person.seating
+        party: person.seating,
+        driver: true
     });
 }
 

@@ -102,7 +102,8 @@ class Rider extends React.Component {
                 lon: lon,
                 name: myname,
                 party: passengers,
-                returnt: returnt
+                returnt: returnt,
+                driver: false
             }
       
             var newTaskRef = taskListRef.push();
