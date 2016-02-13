@@ -67,8 +67,6 @@ function showClients(clients, src) {
 }
 
 function show(clients, dict) {
-  console.log('clients', clients);
-  console.log('dict', dict);
   Object.keys(clients).forEach(function(key) {
     var c = clients[key];
     if (!(key in dict)) {
@@ -95,12 +93,10 @@ function show(clients, dict) {
       }
     }
   });
-  console.log('dict2', dict);
   Object.keys(dict).forEach(function(key) {
     if (!(key in clients)) {
       dict[key].setMap(null);
       delete dict[key];
     }
   });
-  console.log('dict3', dict);
 }

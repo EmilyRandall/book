@@ -3,7 +3,8 @@ var data = {
   user: null,
   drivers: [],
   riders: [],
-  providers: []
+  providers: [],
+  center: [9.73, -104.98]
 }
 
 // a single 'handlers' object that holds all the actions of your entire app
