@@ -1,6 +1,5 @@
 class AppDrivers extends React.Component {
   render(){
-  console.log(this.props.data);
     return <div>
       <MyComponents.NavBar actions={this.props.actions}/>
       <div className="container main">
