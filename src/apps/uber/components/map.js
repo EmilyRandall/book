@@ -55,7 +55,6 @@ function showClients(clients, src) {
   var dict;
   if (src === 'Drivers') {
     dict = drivers;
-    console.log('drivers');
   }
   else if (src === 'Client') {
     dict = riders;

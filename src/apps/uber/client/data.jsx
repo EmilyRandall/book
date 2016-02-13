@@ -3,7 +3,6 @@ var data = {
   user: null,
   drivers: [],
   riders: [],
-  providers: [],
   center: [9.73, -104.98]
 }
 
@@ -19,7 +18,7 @@ function render(){
         data={data}
         actions={actions}/>,
     $('#app-container').get(0)
-  )
+  );
 }
 
 render();
@@ -41,14 +40,7 @@ riderRef.on('value', function(snapshot) {
   render();
 });
 
-var firebaseRef = new Firebase('https://ucdd2-book.firebaseio.com/uber')
-
-// Real-time Data (load constantly on changes)
-firebaseRef.child('providers')
-  .on('value', function(snapshot){
-    data.providers = _.values(snapshot.val())
-    render();
-  });
+var firebaseRef = new Firebase('https://ucdd2-book.firebaseio.com/uber');
 
 
 //
@@ -63,7 +55,7 @@ actions.setUserLocation = function(latlng){
       .child('users')
       .child(data.user.username)
       .child('pos')
-      .set([latlng.lat, latlng.lng])
+      .set([latlng.lat, latlng.lng]);
   }
 }
 
@@ -84,18 +76,18 @@ actions.login = function(){
         id: authData.github.id,
         status: 'online',
         pos: data.center  // position, default to the map center
-      }
+      };
 
-      var userRef = firebaseRef.child('users').child(user.username)
+      var userRef = firebaseRef.child('users').child(user.username);
 
       // subscribe to the user data
       userRef.on('value', function(snapshot){
-        data.user = snapshot.val()
-        render()
-      })
+        data.user = snapshot.val();
+        render();
+      });
 
       // set the user data
-      userRef.set(user)
+      userRef.set(user);
 
     }
   })
@@ -106,21 +98,21 @@ actions.logout = function(){
 
   if (data.user){
 
-    firebaseRef.unauth()
+    firebaseRef.unauth();
 
     var userRef = firebaseRef
       .child('users')
-      .child(data.user.username)
+      .child(data.user.username);
 
     // unsubscribe to the user data
-    userRef.off()
+    userRef.off();
 
     // set the user's status to offline
-    userRef.child('status').set('offline')
+    userRef.child('status').set('offline');
 
-    data.user = null
+    data.user = null;
 
-    render()
+    render();
 
   }
 
