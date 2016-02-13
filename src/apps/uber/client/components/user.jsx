@@ -4,15 +4,14 @@ class User extends React.Component {
 
     if (this.props.user){
       // user is authenticated
-      return <div>
-          <h2>Hello {this.props.user.displayName}!</h2>
-          <pre>{JSON.stringify(this.props.user)}</pre>
+      return <div className="center-align">
+          <h4>Hello {this.props.user.displayName}!</h4>
           <a href="#" onClick={this.props.logoutAction}>Logout</a>
       </div>
     } else {
       // user is not set
-      return <div>
-        <h2>You are not logged in yet.</h2>
+      return <div className="center-align">
+        <h4>You are not logged in yet.</h4>
         <a href="#" onClick={this.props.loginAction}>Login via Github</a>
       </div>
     }
