@@ -79,4 +79,4 @@ function leave(person){
 }
 
 // run each second
-setInterval(simulate, 2000)
+setInterval(simulate, 4000)
