@@ -40,7 +40,7 @@ riderRef.on('value', function(snapshot) {
   render();
 });
 
-var firebaseRef = new Firebase('https://ucdd2-book.firebaseio.com/uber');
+//var root = new Firebase('https://ucdd2-book.firebaseio.com/uber');
 
 
 //
@@ -51,7 +51,7 @@ var firebaseRef = new Firebase('https://ucdd2-book.firebaseio.com/uber');
 actions.setUserLocation = function(latlng){
 
   if (data.user){
-    firebaseRef
+    root
       .child('users')
       .child(data.user.username)
       .child('pos')
@@ -61,7 +61,7 @@ actions.setUserLocation = function(latlng){
 
 actions.login = function(){
 
-  firebaseRef.authWithOAuthPopup("github", function(error, authData){
+  root.authWithOAuthPopup("github", function(error, authData){
 
     // handle the result of the authentication
     if (error) {
@@ -78,7 +78,7 @@ actions.login = function(){
         pos: data.center  // position, default to the map center
       };
 
-      var userRef = firebaseRef.child('users').child(user.username);
+      var userRef = root.child('users').child(user.username);
 
       // subscribe to the user data
       userRef.on('value', function(snapshot){
@@ -98,9 +98,9 @@ actions.logout = function(){
 
   if (data.user){
 
-    firebaseRef.unauth();
+    root.unauth();
 
-    var userRef = firebaseRef
+    var userRef = root
       .child('users')
       .child(data.user.username);
 
