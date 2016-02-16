@@ -4,7 +4,8 @@ var data = {
   drivers: [],
   riders: [],
   center: [39.73, -104.98]
-}
+};
+var root = new Firebase('https://rideski.firebaseio.com/');
 
 // a single 'handlers' object that holds all the actions of your entire app
 var actions = {}
@@ -13,21 +14,45 @@ var actions = {}
 // needs to to re-rendered
 // 'data' and 'actions' are injected into the app
 function render(){
-  ReactDOM.render(
-    <MyComponents.App
-        data={data}
-        actions={actions}/>,
-    $('#app-container').get(0)
-  );
+  var user = getURLParameter('user');
+  if (user !== "" && data.user === null) {
+    root.child('users').child(user).once('value', function(snapshot) {
+      data.user = snapshot.val();
+      ReactDOM.render(
+        <MyComponents.App
+            data={data}
+            actions={actions}/>,
+        $('#app-container').get(0)
+      );
+    });
+  }
+  else {
+    ReactDOM.render(
+      <MyComponents.App
+          data={data}
+          actions={actions}/>,
+      $('#app-container').get(0)
+    );
+  }
 }
 
 render();
 
+function getURLParameter(sParam) {
+  var sPageURL = window.location.search.substring(1);
+  var sURLVariables = sPageURL.split('&');
+  for (var i = 0; i < sURLVariables.length; i++) {
+    var sParameterName = sURLVariables[i].split('=');
+    if (sParameterName[0] == sParam) {
+      return sParameterName[1];
+    }
+  }
+  return "";
+}
+
 //
 // DATA
 //
-  
-var root = new Firebase('https://rideski.firebaseio.com/');
 var driverRef = root.child('Drivers');
 driverRef.on('value', function(snapshot) {
   data.drivers = snapshot.val();
@@ -40,16 +65,12 @@ riderRef.on('value', function(snapshot) {
   render();
 });
 
-//var root = new Firebase('https://ucdd2-book.firebaseio.com/uber');
-
-
 //
 // ACTIONS
 //
 
 // Actions
 actions.setUserLocation = function(latlng){
-
   if (data.user){
     root
       .child('users')
@@ -74,6 +95,7 @@ actions.login = function(){
         displayName: authData.github.displayName,
         username: authData.github.username,
         id: authData.github.id,
+        imgUrl: authData.github.profileImageURL,
         status: 'online',
         pos: data.center  // position, default to the map center
       };

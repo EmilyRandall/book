@@ -16,7 +16,7 @@ function render(){
     <MyComponents.App
         data={data}
         actions={actions}/>,
-    $('#app-container').get(0)
+    $('#app-container').get(0);
   )
 }
 
@@ -36,5 +36,11 @@ driverRef.on('value', function(snapshot) {
 var riderRef = root.child('Client');
 riderRef.on('value', function(snapshot) {
   data.riders = snapshot.val();
+  render();
+});
+
+var userRef = root.child('users');
+userRef.on('value', function(snapshot) {
+  data.users = snapshot.val();
   render();
 });
