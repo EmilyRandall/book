@@ -4,4 +4,14 @@ layout: layout.hbs
 
 # Plan
 
-(TODO: What will my team do this week in order to get ready for the live-demo?)
+Get login working across html pages
+
+Change location of someone who is logged in
+
+Show people who are logged in on admin page
+
+Add select button for drivers
+
+Show notifications for selected drivers
+
+Create list of drivers/riders after submitting form
