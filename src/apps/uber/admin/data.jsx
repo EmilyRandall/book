@@ -16,7 +16,7 @@ function render(){
     <MyComponents.App
         data={data}
         actions={actions}/>,
-    $('#app-container').get(0);
+    $('#app-container').get(0)
   )
 }
 

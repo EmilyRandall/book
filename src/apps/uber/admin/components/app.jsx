@@ -7,7 +7,11 @@ class App extends React.Component {
         <div className="row">
           <div className="col s12">
             <div className="card">
-              <MyComponents.Map src="both" clients={clients} id="driverMap" title="Current drivers and passengers"/>
+              <MyComponents.Map src="both"
+                                clients={clients}
+                                id="driverMap"
+                                title="Current drivers and passengers"
+                                users={this.props.data.users}/>
             </div>
           </div>
         </div>

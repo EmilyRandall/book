@@ -2,6 +2,7 @@ var map;
 var drivers = {};
 var riders = {};
 var both = {};
+var users = {};
 var costs = {"Winter Park": "$20",
             "Copper": "$25",
             "Keystone": "$20",
@@ -96,6 +97,38 @@ function show(clients, dict) {
     if (!(key in clients)) {
       dict[key].setMap(null);
       delete dict[key];
+    }
+  });
+}
+
+function showActiveUsers(currentUsers) {
+  Object.keys(currentUsers).forEach(function(key) {
+    var user = currentUsers[key];
+    if (!(key in users)) {
+      var marker = new google.maps.Marker({
+        map: map,
+        position: {'lat': user.pos[0], 'lng': user.pos[1]},
+        icon: '../images/green-marker.png'
+      });
+      var infowindow = new google.maps.InfoWindow({
+        content: '<p>' + user['displayName'] + '</p>'
+      });
+      marker.addListener('click', function() {
+        infowindow.open(map, marker);
+      });
+      users[key] = marker;
+    }
+    else {
+      var oldPos = users[key].getPosition();
+      if (oldPos.lat() !== user.lat || oldPos.lng !== user.lon) {
+        users[key].setPosition({lat: user.lat, lng: user.lon});
+      }
+    }
+  });
+  Object.keys(users).forEach(function(key) {
+    if ((key in currentUsers) && currentUsers[key].status !== 'online') {
+      users[key].setMap(null);
+      delete users[key];
     }
   });
 }

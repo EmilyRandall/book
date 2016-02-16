@@ -1,8 +1,9 @@
 class NavBar extends React.Component {
 
   render(){
-    var driverLink = this.props.user === null ? "../client/drivers.html" : "../client/drivers.html?user=" + this.props.user.username;
-    var riderLink = this.props.user === null ? "../client/riders.html" : "../client/riders.html?user=" + this.props.user.username;
+    var userExists = this.props.user === undefined || this.props.user === null;
+    var driverLink = userExists ? "../client/drivers.html" : "../client/drivers.html?user=" + this.props.user.username;
+    var riderLink = userExists ? "../client/riders.html" : "../client/riders.html?user=" + this.props.user.username;
     return (
       <nav>
         <div className="nav-wrapper blue darken-4">
