@@ -110,8 +110,9 @@ function showActiveUsers(currentUsers) {
         position: {'lat': user.pos[0], 'lng': user.pos[1]},
         icon: '../images/green-marker.png'
       });
+      var name = user.displayName === undefined ? user.username : user.displayName;
       var infowindow = new google.maps.InfoWindow({
-        content: '<p>' + user['displayName'] + '</p>'
+        content: '<p>' + name + '</p>'
       });
       marker.addListener('click', function() {
         infowindow.open(map, marker);

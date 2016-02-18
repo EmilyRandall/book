@@ -13,6 +13,7 @@ class AppRiders extends React.Component {
             <div className="card">
               <MyComponents.Rider
                   user={this.props.data.user}
+                  drivers={this.props.data.drivers}
                   loginAction={this.props.actions.login}
                   logoutAction={this.props.actions.logout}/>
             </div>
