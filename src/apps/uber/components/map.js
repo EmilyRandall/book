@@ -121,8 +121,8 @@ function showActiveUsers(currentUsers) {
     }
     else {
       var oldPos = users[key].getPosition();
-      if (oldPos.lat() !== user.lat || oldPos.lng !== user.lon) {
-        users[key].setPosition({lat: user.lat, lng: user.lon});
+      if (oldPos.lat() !== user.pos[0] || oldPos.lng !== user.pos[1]) {
+        users[key].setPosition({'lat': user.pos[0], 'lng': user.pos[1]});
       }
     }
   });
