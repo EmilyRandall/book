@@ -4,6 +4,7 @@ class User extends React.Component {
 
     if (this.props.user){
       // user is authenticated
+      var name = this.props.user.displayName === undefined ? this.props.user.username : this.props.user.displayName;
       return (
         <div className="center-align">
           <div className="row">
@@ -13,7 +14,7 @@ class User extends React.Component {
             <div className="col s8">
               <div className="chip" style={{'height': '45px', 'fontSize': '275%'}}>
                 <img src={this.props.user.imgUrl} style={{'height': '45px', 'width': '45px'}}/>
-                Hello {this.props.user.displayName}!
+                Hello {name}!
               </div>
             </div>
             <div className="col s2 right-align">
