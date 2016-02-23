@@ -14,10 +14,11 @@
     <script src="lib/react-dom.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
   </head>
   <body>
+    <div id="navbar"></div>
     <div class="container">
-      <div id="navbar"></div>
       <div id="team"></div>
       <div id="garage"></div>
     </div>
@@ -49,27 +50,26 @@
       var GARAGE_NAME = 'Golden Gateway Garage'
 
       // data about the team
-      // TODO: add more attributes (lastname, github repo link)
-      var members = [{name: 'John'}, {name: 'Mary'}]
+      var members = [{name: 'Nicolas Broeking', github: 'https://github.com/nbroeking', image: 'images/nbroeking.jpg'},
+        {name: 'Peizhe Cao', github: 'https://github.com/PeicheTsao', image: 'images/peizhecao.png'},
+        {name: 'Emily Randall', github: 'https://github.com/EmilyRandall', image: 'images/emilyrandall.jpg'},
+        {name: 'Frederik Lohner', github: 'https://github.com/FredLoh', image: 'images/fredloh.png'}];
 
       ReactDOM.render(
         <MyComponents.Team members={members}/>,
         $('#team').get(0)
       );
 
-      var garage = {name: 'something'}
-
       // make a jQuery call to load the garages data
       $.ajax({url:'garages.snapshot.json'})
         .success(function(garages) {
 
-          console.log('garages:', garages)
-          ReactDOM.render(
-            <MyComponents.Garage garage={garages[GARAGE_NAME]}/>,
+          ReactDOM.render(<MyComponents.Garage garages={garages}/>,
             $('#garage').get(0)
-          )
+          );
+          
 
-        })
+        });
 
     </script>
   </body>
