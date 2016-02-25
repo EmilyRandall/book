@@ -6,7 +6,7 @@ layout: layout.hbs
 
 ## Team Members
 
-(TODO: Names)
+Emily Randall (Professor Yeh said that it was acceptable to work alone, since my team members all chose to find other groups)
 
 ## Ideation
 
@@ -15,35 +15,35 @@ the integration of creative ideas from every team member.
 
 * What is the name of your app?
 
-(TODO: Answer)
+App name: Microscope Online
 
 * What collaborative activity can people do together using your app?
 
-(TODO: Answer)
+Worldbuilding for LARPs, RPGs, and creative writing
 
 * What is the ideal number of concurrent users (must be at least 10 but no more than 40)?
 
-(TODO: Answer)
+10 in a single game, though any number of games can be played at once
 
 * What skills do people need in order to do this activity?
 
-(TODO: Answer)
+Creativity, patience, improvisational acting, and cooperation
 
 * Is this activity for fun or for something practical?
 
-(TODO: Answer)
+Both
 
 * How can a person see what everyone else is doing?
 
-(TODO: Answer)
+The player who is the 'lens' will be highlighted, as will their selection of epoch, event, or scene.  During scene creation, actions taken by each player will appear as soon as they type them into the card.
 
 * How can a person see the most recent result of everyone's collaborative effort?
 
-(TODO: Answer)
+After each player's turn, the card that they create appears on the board and the lens switches to the next player
 
 * What can an admin see (i.e., God's mode)?
 
-(TODO: Answer)
+There is no admin, every user can see everything
 
 ## Contributions
 
@@ -52,18 +52,8 @@ It's okay to credit multiple people for the same idea. The rationale of this
 section of the proposal is to demonstrate that everyone on the team contributes
 useful ideas.
 
-* Person 1
-  * idea
-  * idea
-* Person 2
-  * idea
-  * idea
-* Person 3
-  * idea
-  * idea
-* Person 4
-  * idea
-  * idea
+* Emily
+  * App idea
 
 ## Plan
 
@@ -73,15 +63,20 @@ efforts may be required from your team to develop the together app.
 
 * What existing components of the uber app your team can reuse?
 
-(TODO: Answer)
+None
 
 * What new components and features your team may need to build?
 
-(TODO: Answer)
+  * Dynamic data loading
+
+  * Switching the lens
+
+  * Limiting action to the person who is the lens
+
 
 * What new skills your team will still need to acquire?
 
-(TODO: Answer)
+Interfacing React with jQuery
 
 ## What's Next?
 
