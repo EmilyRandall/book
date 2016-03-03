@@ -62,14 +62,6 @@ Our app uses the following structure for the database backend:
                 
                     answer: -answer-
                     
-                    charaters
-                      
-                      0: name1
-                      
-                      ...
-                    
-                    description: -roleplay scene-
-                    
                   ...
                 
               ...
