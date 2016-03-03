@@ -1,0 +1,122 @@
+body {
+  background: url("../images/background.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+/* label color */
+.input-field label {
+  color: #565656;
+}
+/* label focus color */
+.input-field input[type=text]:focus + label {
+  color: #73310e;
+}
+/* label underline focus color */
+.input-field input[type=text]:focus {
+  border-bottom: 1px solid #73310e;
+  box-shadow: 0 1px 0 0 #73310e;
+}
+/* valid color */
+.input-field input[type=text].valid {
+  border-bottom: 1px solid #ab4f1e;
+  box-shadow: 0 1px 0 0 #ab4f1e;
+}
+.input-field label:active {
+  color: #ab4f1e;
+}
+/* invalid color */
+.input-field input[type=text].invalid {
+  border-bottom: 1px solid #941b1b;
+  box-shadow: 0 1px 0 0 #941b1b;
+}
+/* icon prefix focus color */
+.input-field .prefix.active {
+  color: #000;
+}
+
+.card {
+  padding: 10px 15px;
+  border: 1px solid black;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.card .card-content {
+  padding: 0px;
+  margin: 0px;
+  text-align: center;
+}
+
+.period {
+  background-color: rgba(41, 145, 73, 0.8);
+  height: 110px;
+  text-align: center;
+  color: #3c3c3c;
+  cursor: pointer;
+}
+
+.event {
+  background-color: rgba(218, 144, 57, 0.8);
+  cursor: pointer;
+}
+
+.light {
+  border: 5px solid white;
+}
+
+.dark {
+  border: 5px solid black;
+}
+
+.header {
+  background: #ab4f1e; /* For browsers that do not support gradients */
+  background: -webkit-linear-gradient(#ab4f1e, #73310e); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(#ab4f1e, #73310e); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(#ab4f1e, #73310e); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(#ab4f1e, #73310e); /* Standard syntax */
+  color: #f6cfa1;
+}
+
+.header .input-field label {
+  color: #f6cfa1;
+}
+
+.dropdown-content li > span {
+  color: #73310e;
+}
+
+.btn, #create {
+  background-color: #ab4f1e;
+}
+
+.btn:hover, #create:hover {
+  background-color: #73310e;
+}
+
+.btn-floating {
+  background-color: #ab4f1e;
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+}
+
+.btn-floating:hover {
+  background-color: #73310e;
+}
+
+.done {
+  background-color: #e7a251;
+  color: #73310e;
+}
+
+.done:hover {
+  background-color: #f0b268;
+  color: #73310e;
+}
+
+.collection .collection-item.active {
+  background-color: #ab4f1e;
+  color: #f6cfa1;
+}

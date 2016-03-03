@@ -8,86 +8,293 @@ layout: layout.hbs
 
 Our app uses the following structure for the database backend:
 
-* foo
-  * bar
-    * ss
-    * xx
-  * messages
+    Games
+
+      -random key-
+      
+        players
+        
+          -key-
+          
+            name: -name-
+            
+            active: false
+            
+          ...
+          
+        big-picture: -description-
+        
+        palette
+        
+          yes
+          
+            0: -description-
+            
+            ...
+            
+          no
+          
+            0: -description-
+            
+            ...
+          
+        epochs
+        
+          0
+          
+            title: -title-
+            
+            color: 'black' or 'white'
+          
+            events
+            
+              -key-
+              
+                title: -title-
+                
+                color: 'black' or 'white'
+                
+                scenes
+                
+                  -key-
+                  
+                    question: -question-
+                
+                    answer: -answer-
+                    
+                    charaters
+                      
+                      0: name1
+                      
+                      ...
+                    
+                    description: -roleplay scene-
+                    
+                  ...
+                
+              ...
+          
+          1
+          
+          2
+          
+          3
+          
+          4
+          
+          5
+          
+      -random key-
+      
+      ...
 
 # Actions
 
 The major actions of our app are:
-* (TODO: action name)
-* (TODO: action name)
-* (TODO: action name)
-* (TODO: action name)
-* (TODO: action name)
+* Create game
+* Join game
+* Leave game
+* Set big picture description
+* Create palette
+* Create epoch
+* Create event
+* Create scene
 
-## Action: (TODO: name)
+## Action: Create game
 
-(TODO: cases)
-
-## Action: (TODO: name)
-
-(TODO: cases)
-
-## Action: (TODO: name)
-
-(TODO: cases)
-
-## Action: (TODO: name)
-
-(TODO: cases)
-
-
-
-
-(remove the example below before submission)
-
-## Action: Post A Message (Example)
-
-### case: post a message 'd'
+### case: default
 
 ``` javascript
 // given
-foo.bar.messages is
-{
-  '-cadsace': 'a',
-  '-cadsacf': 'b',
-  '-cadsacg': 'c'
-}
+$('#create-name').get() !== ''
 
 // when
-post_a_message(text = 'd')
+createGameButton.click()
 
-// then
-foo.bar.messages should be
-{
-  '-cadsace': 'a',
-  '-cadsacf': 'b',
-  '-cadsacg': 'c',
-  '-cadsach': 'd',
-}
+//then
+showModal(welcomeToGameModal)
+Games.add(generated_key)
 ```
 
-### case: delete a message
+## Action: Join game
+
+### case: valid password
 
 ``` javascript
 // given
-foo.bar.messages is
-{
-  '-cadsace': 'a',
-  '-cadsacf': 'b',
-  '-cadsacg': 'c'
-}
+$('#join-name').get() !== '' && $('#password').get() !== '' && Games[$('#password').get()] !== undefined
 
 // when
-delete_a_message(id = '-cadsacg')
+joinGameButton.click()
 
-// then
-foo.bar.messages should be
-{
-  '-cadsace': 'a',
-  '-cadsacf': 'b'
-}
+//then
+go_to_page(intro.html)
+Games.password.addPlayer(name)
+```
+
+### case: invalid password
+
+``` javascript
+// given
+$('#join-name').get() !== '' && $('#password').get() !== '' && Games[$('#password').get()] === undefined
+
+// when
+joinGameButton.click()
+
+//then
+showModal(sorry)
+```
+
+## Action: Leave game
+
+### case: default
+
+``` javascript
+// given
+state = in_game
+
+// when
+leaveGameButton.click()
+
+//then
+current_game.removePlayer(me)
+go_to_page(start.html)
+```
+
+## Action: Set big picture description
+
+### case: default
+
+``` javascript
+// given
+$('#big-picture').get() !== ''
+
+// when
+setDescriptionButton.click()
+
+//then
+Games[generated_key].big-picture = $('#big-picture').get()
+reload()
+```
+
+## Action: Create palette
+
+### case: add 'Yes'
+
+``` javascript
+// given
+Games.players.find(player.active === true) === me && $('#add-yes').get() !== ''
+
+// when
+submitButton.click()
+
+//then
+Games.palette.yes.add($('#add-yes').get())
+reload()
+```
+
+### case: add 'No'
+
+``` javascript
+// given
+Games.players.find(player.active === true) === me && $('#add-no').get() !== ''
+
+// when
+submitButton.click()
+
+//then
+Games.palette.no.add($('#add-no').get())
+reload()
+```
+
+## Action: Create epoch
+
+### case: create epoch i
+
+``` javascript
+// given
+$('#epoch' + i).isEmpty() && $('#title').get() !== '' && $('color').get() !== ''
+
+// when
+submitButton.click()
+
+//then
+Games.epochs[i].title = $('#title').get()
+Games.epochs[i].color = $('#color').get()
+reload()
+```
+
+## Action: Create event
+
+### case: create event for epoch i
+
+``` javascript
+// given
+!$('#epoch' + i).isEmpty() && $('#title').get() !== '' && $('color').get() !== ''
+
+// when
+submitButton.click()
+
+//then
+Games.epochs[i].addEvent( {title: $('#title').get()
+                           color: $('#color').get()})
+reload()
+```
+
+## Action: Create scene
+
+### case: create question for scene for event i
+
+``` javascript
+// given
+!$('#event' + i).isEmpty() && $('#question').get() !== ''
+
+// when
+submitButton.click()
+
+//then
+Games.epochs[event.getEpoch()].event.addScene( {question: $('#question').get()})
+reload()
+```
+
+### case: create character for scene i
+
+``` javascript
+// given
+scenes.get(i) !== undefined && Games.players.find(player.active === true) === me && $('#character').get() !== ''
+
+// when
+createCharacterButton.click()
+
+//then
+scene.characters.add($('#character').get())
+reload()
+```
+
+### case: roleplay scene i
+
+``` javascript
+// given
+scenes.get(i) !== undefined && Games.players.find(player.active === true) === me
+
+// when
+editSceneButton.click()
+
+//then
+scene.description = $('#scene').get()
+reload()
+```
+
+### case: answer scene question for scene i
+
+``` javascript
+// given
+scene.description.isComplete() && scene.creator === me && $('#answer').get() !== ''
+
+// when
+addAnswerButton.click()
+
+//then
+scene.answer = $('#answer').get()
+reload()
 ```

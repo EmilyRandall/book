@@ -1,0 +1,60 @@
+<div class="center-align">
+  <div class="row">
+    <div class="col s4 offset-s4">
+      <form class="card">
+        <span class="card-title">Enter the Game</span>
+        <div class="input-field">
+          <input id="name" type="text" class="validate">
+          <label for="name">Name</label>
+        </div>
+        <div class="input-field">
+          <input id="token" type="text" class="validate">
+          <label for="token">Access token</label>
+        </div>
+        <button class="btn waves-effect waves-light" id="begin" type="submit">Begin Game</button>
+      </form>
+      
+      <form class="card">
+        <span class="card-title">Start New Game</span>
+        <div class="input-field">
+          <input id="name2" type="text" class="validate">
+          <label for="name2">Name</label>
+        </div>
+        <button class="btn modal-trigger" id="create" type="submit">Create Game</button>
+      </form>
+    </div>
+  </div>
+  
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+      <h4>Welcome to Microscope Online</h4>
+      <p id="access-token"></p>
+    </div>
+    <div class="modal-footer center-align">
+      <a id="begin-game" href="#intro" class=" modal-action modal-close waves-effect waves-light btn">Begin game</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('#begin').click(function() {
+    if ($('#name').val() !== "" && $('#token').val() !== "") {
+      window.location.href='?key=' + $('#token').val() + '#intro';
+    }
+    else {
+      Materialize.toast('Please enter your name and access token', 4000);
+    }
+  });
+  
+  $('#create').click(function() {
+    if ($('#name2').val() !== "") {
+      var token = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 8);
+      $('#access-token').html("Your access token is " + token);
+      $('#begin-game').attr('href', '?key=' + token + '#intro');
+      $('#modal1').openModal();
+    }
+    else {
+      Materialize.toast('Please enter your name', 4000);
+    }
+  });
+</script>
