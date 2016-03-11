@@ -1,0 +1,22 @@
+<div id="timeline" class="row header">
+  <div class="col s4 left-align">
+    <h4>Start</h4>
+  </div>
+  <div class="col s4 center-align" id="playerMenu"></div>
+  <div class="col s4 right-align">
+    <h4>End</h4>
+  </div>
+</div>
+<div id="gameboard"></div>
+
+<script>  
+  ref.child(gameKey + '/epochs').on('value', function(snapshot){
+    epochs = snapshot.val();
+    showBoard(epochs);
+  });
+  
+  ref.child(gameKey + '/players').on('value', function(snapshot){
+    var currentPlayers = snapshot.val();
+    showPlayerMenu(currentPlayers);
+  });
+</script>

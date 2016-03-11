@@ -1,0 +1,63 @@
+<div class="center-align row header valign-wrapper">
+  <div class="col s8 offset-s2">
+    <h4>Setup</h4>
+  </div>
+  <div class="col s2 valign">
+    <button class="btn waves-effect waves-light done" type="submit" onclick="javascript:window.location.href='#game'">Done</button>
+  </div>
+</div>
+<div class="row">
+  <div class="container">
+    <div class="col s3">
+      <div class="card">
+        <h5>Players</h5>
+        <div id="playerList"></div>
+      </div>
+    </div>
+    <div class="col s9">
+      <div class="card center-align" id="big-picture"></div>
+      <div class="row">
+        <div class="col s6">
+          <div class="card">
+            <div class="card-content">
+              <span class="card-title">Yes</span>
+              <div id="yesList"></div>
+              <div class="right-align"><a class="btn-floating btn-small waves-effect waves-light"><i class="material-icons">add</i></a></div>
+            </div>
+          </div>
+        </div>
+        <div class="col s6">
+          <div class="card">
+            <div class="card-content">
+              <span class="card-title">No</span>
+              <div id="noList"></div>
+              <div class="right-align"><a class="btn-floating btn-small waves-effect waves-light"><i class="material-icons">add</i></a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  ref.child(gameKey + '/players').on('value', function(snapshot){
+    var currentPlayers = snapshot.val();
+    showPlayerList(currentPlayers);
+  });
+  
+  ref.child(gameKey + '/bigPicture').on('value', function(snapshot){
+    var bigPicture = snapshot.val();
+    showBigPicture(bigPicture);
+  });
+  
+  ref.child(gameKey + '/palette/yes').on('value', function(snapshot){
+    var yeses = snapshot.val();
+    showPalette(yeses, document.getElementById('yesList'));
+  });
+  
+  ref.child(gameKey + '/palette/no').on('value', function(snapshot){
+    var nos = snapshot.val();
+    showPalette(nos, document.getElementById('noList'));
+  });
+</script>

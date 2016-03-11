@@ -1,4 +1,4 @@
-var _ = require('lodash')
+var _ = require('lodash');
 var random_name = require('node-random-name');
 var Firebase = require('firebase');
 var ref = new Firebase('https://shining-fire-9960.firebaseio.com/games');
@@ -31,23 +31,23 @@ function simulate() {
   }
   
   setTimeout(function() {
-    addEpoch(token, 0, "First Epoch", "white");
+    addEpoch(token, 0, "First Epoch", "light");
   }, 10000);
   
   setTimeout(function() {
-    addEpoch(token, 5, "Last Epoch", "white");
+    addEpoch(token, 5, "Last Epoch", "light");
   }, 12000);
   
   setTimeout(function() {
-    addEpoch(token, 3, "Middle Epoch", "black");
+    addEpoch(token, 3, "Middle Epoch", "dark");
   }, 14000);
   
   setTimeout(function() {
-    addEvent(token, 3, "First event for middle epoch", "white");
+    addEvent(token, 3, "First event for middle epoch", "light");
   }, 16000);
   
   setTimeout(function() {
-    var eventKey = addEvent(token, 0, "First event for first epoch", "black");
+    var eventKey = addEvent(token, 0, "First event for first epoch", "dark");
     var sceneKey = addScene(token, 0, eventKey, "Question for first scene?");
     answerSceneQuestion(token, 0, eventKey, sceneKey, "Answer for first scene");
   }, 18000);
@@ -140,7 +140,7 @@ function addNo(token, no) {
  * token: game token
  * i: which epoch (0 - 5)
  * title: title of event
- * color: 'black' or 'white'
+ * color: 'light' or 'dark'
  */
 function addEpoch(token, i, title, color) {
   console.log("Add epoch", i, "with description", title);
@@ -155,7 +155,7 @@ function addEpoch(token, i, title, color) {
  * token: game token
  * i: which epoch to add event under
  * title: title of event
- * color: 'black' or 'white'
+ * color: 'light' or 'dark'
  */
 function addEvent(token, i, title, color) {
   console.log("Add event to epoch", i, "with description", title);

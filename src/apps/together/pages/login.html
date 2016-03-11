@@ -1,0 +1,77 @@
+<div class="center-align">
+  <div class="row">
+    <div class="col s4 offset-s4">
+      <form class="card">
+        <span class="card-title">Enter the Game</span>
+        <div class="input-field">
+          <input id="name" type="text" class="validate">
+          <label for="name">Name</label>
+        </div>
+        <div class="input-field">
+          <input id="token" type="text" class="validate">
+          <label for="token">Access token</label>
+        </div>
+        <button class="btn waves-effect waves-light" id="join-game" type="submit">Begin Game</button>
+      </form>
+      
+      <form class="card">
+        <span class="card-title">Start New Game</span>
+        <div class="input-field">
+          <input id="name2" type="text" class="validate">
+          <label for="name2">Name</label>
+        </div>
+        <button class="btn modal-trigger" id="create" type="submit">Create Game</button>
+      </form>
+    </div>
+  </div>
+  
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+      <h4>Welcome to Microscope Online</h4>
+      <p id="access-token"></p>
+      <div class="center-align">
+        <button id="begin-game" class="btn modal-action modal-close waves-effect waves-light">Begin game</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  var name;
+  var token;
+  var onSuccess = function() {
+    window.location.href='?key=' + token + '#intro';
+  }
+  var onFailure = function() {
+    Materialize.toast('Invalid access token, please try again', 4000);
+  }
+  
+  $('#join-game').click(function() {
+    name = $('#name').val();
+    token = $('#token').val();
+    if (name !== "" && token !== "") {
+      console.log(name);
+      joinGame(name, token, onSuccess, onFailure);
+    }
+    else {
+      Materialize.toast('Please enter your name and access token', 4000);
+    }
+  });
+  
+  $('#begin-game').click(function() {
+    createGame(name, token, onSuccess);
+  });
+  
+  $('#create').click(function() {
+    name = $('#name2').val();
+    if (name !== "") {
+      token = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 8);
+      $('#access-token').html("Your access token is " + token);
+      //$('#begin-game').attr('href', '?key=' + token + '#intro');
+      $('#modal1').openModal();
+    }
+    else {
+      Materialize.toast('Please enter your name', 4000);
+    }
+  });
+</script>
