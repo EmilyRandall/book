@@ -2,6 +2,11 @@ var ref = new Firebase('https://shining-fire-9960.firebaseio.com/games');
 var gameKey = '';
 var currentPlayer = '';
 
+/**
+ * name: player name
+ * token: game key
+ * onSuccess: function called if successful
+ */
 function createGame(name, token, onSuccess) {
   console.log('create', name);
   var game = ref.child(token);
@@ -24,11 +29,17 @@ function createGame(name, token, onSuccess) {
   });
   var players = game.child('players');
   var playerRef = players.push();
-  currentPlayer = playerRef.key();
   playerRef.set({name: name, active: true});
+  currentPlayer = playerRef.key();
   onSuccess();
 }
 
+/**
+ * name: player name
+ * token: game key
+ * onSuccess: function called if successful
+ * onFailure: function called if game does not exist
+ */
 function joinGame(name, token, onSuccess, onFailure) {
   console.log('join', name);
   ref.once('value', function(snapshot) {
@@ -45,6 +56,9 @@ function joinGame(name, token, onSuccess, onFailure) {
   });
 }
 
+/**
+ * name: name of player leaving
+ */
 function leaveGame(name) {
   console.log('leave', name);
   var game = ref.child(gameKey);
@@ -58,6 +72,9 @@ function leaveGame(name) {
   });
 }
 
+/**
+ * description: new big picture
+ */
 function setBigPicture(description) {
   console.log("Set big picture", description);
   var game = ref.child(gameKey);
@@ -66,18 +83,18 @@ function setBigPicture(description) {
   });
 }
 
-function addYes(yes) {
-  console.log("Add yes", yes);
-  var yesSet = ref.child(gameKey).child('palette/yes');
-  yesSet.push().set({description: yes});
+/**
+ * description: item to add
+ * location: 'yes' or 'no'
+ */
+function addToPalette(description, location) {
+  var palette = ref.child(gameKey).child('palette/' + location);
+  palette.push().set({description: description});
 }
 
-function addNo(no) {
-  console.log("Add no", no);
-  var noSet = ref.child(gameKey).child('palette/no');
-  noSet.push().set({description: no});
-}
-
+/**
+ * key: key of player
+ */
 function setLens(key) {
   var players = ref.child(gameKey).child('players');
   players.child(currentPlayer).update({
@@ -90,7 +107,6 @@ function setLens(key) {
 }
 
 /**
- * token: game token
  * i: which epoch (0 - 5)
  * title: title of event
  * color: 'black' or 'white'
@@ -105,7 +121,6 @@ function addEpoch(i, title, color) {
 }
 
 /**
- * token: game token
  * i: which epoch to add event under
  * title: title of event
  * color: 'black' or 'white'
@@ -122,7 +137,6 @@ function addEvent(i, title, color) {
 }
 
 /**
- * token: game token
  * i: which epoch to add event under
  * key: key of event to add scene
  * question: guiding question of scene
@@ -139,7 +153,6 @@ function addScene(i, key, question) {
 }
 
 /**
- * token: game token
  * i: which epoch to add event under
  * eventKey: key of event that contains the scene
  * sceneKey: key of scene

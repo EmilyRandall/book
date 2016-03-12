@@ -67,7 +67,6 @@
     if (name !== "") {
       token = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 8);
       $('#access-token').html("Your access token is " + token);
-      //$('#begin-game').attr('href', '?key=' + token + '#intro');
       $('#modal1').openModal();
     }
     else {
