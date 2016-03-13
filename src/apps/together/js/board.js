@@ -15,8 +15,7 @@ var Board = React.createClass({
     console.log('add', this.state.epoch);
     var color = $('#' + this.state.epochColorId).val();
     var title = $('#' + this.state.epochTitleId).val();
-    console.log(color, title);
-    if (color !== 0 && title !== '') {
+    if (color !== '0' && title !== '') {
       color = $('#' + this.state.epochColorId + ' option:selected').text();
       addEpoch(this.state.epoch, title, color);
       $('#' + this.state.epochModalId).closeModal();

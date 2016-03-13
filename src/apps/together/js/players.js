@@ -23,16 +23,18 @@ var PlayerMenu = React.createClass({
     var thisNode = this;
     var list = _.keys(this.props.players).map(function(key, i){
       var player = thisNode.props.players[key];
-      return React.createElement(Player, {name: player.name, active: player.active, isList: false, key: i, id: key});
+      if (player.active) {
+        currentPlayer = key;
+      }
+      return React.createElement(Player, {name: player.name, isList: false, key: i, id: key});
     });
-    var select = React.createElement('select', {id: "playerSelect"}, list);
+    var select = React.createElement('select', {id: "playerSelect", defaultValue: currentPlayer}, list);
     var label = React.createElement('label', null, 'Lens');
     return React.createElement('div', {className: 'input-field col s12'}, select, label);
   },
   
   componentDidMount: function() {
     $('select').material_select();
-    currentPlayer = $('select').children(":selected").attr("id");
     
     $('select').on('change', function() {
       var current = $('select').children(":selected").attr("id");
@@ -48,7 +50,7 @@ var Player = React.createClass({
       return React.createElement('li', {className: className, id: this.props.id}, this.props.name);
     }
     else {
-      return React.createElement('option', {value: this.props.key, id: this.props.id}, this.props.name);
+      return React.createElement('option', {value: this.props.id, id: this.props.id}, this.props.name);
     }
   }
 });
