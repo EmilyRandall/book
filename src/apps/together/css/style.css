@@ -111,12 +111,12 @@ body {
   background-color: #73310e;
 }
 
-.done {
+.header-button {
   background-color: #e7a251;
   color: #73310e;
 }
 
-.done:hover {
+.header-button:hover {
   background-color: #f0b268;
   color: #73310e;
 }

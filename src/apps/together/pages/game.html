@@ -1,10 +1,21 @@
-<div id="timeline" class="row header">
-  <div class="col s4 left-align">
+<div id="timeline" class="row header valign-wrapper">
+  <div class="col s2 left-align">
     <h4>Start</h4>
   </div>
+  <div class="col s2 valign center-align">
+    <button class="btn waves-effect waves-light header-button" type="submit" onclick="javascript:window.location.href='#intro'">Setup</button>
+  </div>
   <div class="col s4 center-align" id="playerMenu"></div>
-  <div class="col s4 right-align">
+  <div class="col s2 valign center-align">
+    <button class="btn modal-trigger waves-effect waves-light header-button" data-target="rules-modal">Rules</button>
+  </div>
+  <div class="col s2 right-align">
     <h4>End</h4>
+  </div>
+</div>
+<div id="rules-modal" class="modal" style="width:90%; max-height:85%;">
+  <div class="modal-content">
+    <iframe src="pages/MicroscopeRules.pdf" style="width:100%; height:525px;" frameborder="0"></iframe>
   </div>
 </div>
 <div id="gameboard"></div>
@@ -18,5 +29,9 @@
   ref.child(gameKey + '/players').on('value', function(snapshot){
     var currentPlayers = snapshot.val();
     showPlayerMenu(currentPlayers);
+  });
+  
+  $(document).ready(function(){
+    $('.modal-trigger').leanModal();
   });
 </script>

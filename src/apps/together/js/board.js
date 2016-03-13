@@ -4,7 +4,10 @@ var Board = React.createClass({
       epoch: -1,
       epochTitleId: 'epoch-title',
       epochColorId: 'epoch-color',
-      epochModalId: 'epoch-modal'
+      epochModalId: 'epoch-modal',
+      eventTitleId: 'event-title',
+      eventColorId: 'event-color',
+      eventModalId: 'event-modal'
     };
   },
   
@@ -23,8 +26,28 @@ var Board = React.createClass({
     }
   },
   
-  openModal: function(i) {
-    $('#' + this.state.epochModalId).openModal();
+  addEvent: function() {
+    console.log('add', this.state.epoch);
+    var color = $('#' + this.state.eventColorId).val();
+    var title = $('#' + this.state.eventTitleId).val();
+    console.log(color, title);
+    if (color !== 0 && title !== '') {
+      color = $('#' + this.state.eventColorId + ' option:selected').text();
+      addEvent(this.state.epoch, title, color);
+      $('#' + this.state.eventModalId).closeModal();
+    }
+    else {
+      Materialize.toast('Please enter a color and title for the event', 4000);
+    }
+  },
+  
+  /**
+   * i: id of epoch
+   * isEpoch: create epoch or event
+   */
+  openModal: function(i, isEpoch) {
+    var id = isEpoch ? this.state.epochModalId : this.state.eventModalId;
+    $('#' + id).openModal();
     this.setState({epoch: i});
   },
   
@@ -43,13 +66,12 @@ var Board = React.createClass({
                                                  title: 'Create Epoch',
                                                  id: this.state.epochModalId,
                                                  buttonClick: this.addEpoch});
-    return React.createElement('div', {className: 'row'}, list, epochModal);
-  },
-  
-  componentDidMount: function() {
-    $('.event').click(function() {
-      console.log('event click');
-    });
+    var eventModal = React.createElement(Modal, {titleId: this.state.eventTitleId,
+                                                 colorId: this.state.eventColorId,
+                                                 title: 'Create Event',
+                                                 id: this.state.eventModalId,
+                                                 buttonClick: this.addEvent});
+    return React.createElement('div', {className: 'row'}, list, epochModal, eventModal);
   }
 });
 
@@ -57,21 +79,18 @@ var Board = React.createClass({
  * Props: color, title, id, openModal
  */
 var Period = React.createClass({
-  addEvent: function(i) {
-    console.log(i);
-  },
-  
   render: function() {
     if (this.props.color === '') {
       var span = React.createElement('span', null, "Add Epoch");
       return React.createElement('div', {className: "card period unknown",
                                          id: this.props.id,
-                                         onClick: this.props.openModal.bind(null, this.props.id)}, span);
+                                         onClick: this.props.openModal.bind(null, this.props.id, true)}, span);
     }
     else {
       var i = React.createElement('i', {className: "material-icons"}, "add");
       var a = React.createElement('a', {className: "btn-floating btn-small waves-effect waves-light"}, i);
-      var button = React.createElement('div', {className: "right-align", onClick: this.addEvent.bind(this, this.props.id)}, a);
+      var button = React.createElement('div', {className: "right-align",
+                                               onClick: this.props.openModal.bind(null, this.props.id, false)}, a);
       var strong = React.createElement('strong', null, this.props.title);
       var span = React.createElement('span', null, strong);
       return React.createElement('div', {className: "card period " + this.props.color, id: this.props.id}, span, button);
