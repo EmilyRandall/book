@@ -1,6 +1,7 @@
 var ref = new Firebase('https://shining-fire-9960.firebaseio.com/games');
 var gameKey = '';
 var currentPlayer = '';
+var playerToken = '';
 
 /**
  * name: player name
@@ -31,7 +32,8 @@ function createGame(name, token, onSuccess) {
   var playerRef = players.push();
   playerRef.set({name: name, active: true});
   currentPlayer = playerRef.key();
-  onSuccess();
+  playerToken = playerRef.key();
+  onSuccess(playerToken);
 }
 
 /**
@@ -47,8 +49,10 @@ function joinGame(name, token, onSuccess, onFailure) {
     if (_.has(games, token)) {
       gameKey = token;
       var players = ref.child(token).child('players');
-      players.push().set({name: name, active: false});
-      onSuccess();
+      var playerRef = players.push()
+      playerRef.set({name: name, active: false});
+      playerToken = playerRef.key();
+      onSuccess(playerToken);
     }
     else {
       onFailure();
@@ -67,29 +71,23 @@ function leaveGame(name) {
     _.keys(players).forEach(function(key) {
       if (players[key].name === name) {
         game.child('players').child(key).remove();
+        playerToken = '';
       }
     });
   });
 }
 
-/**
- * description: new big picture
- */
-function setBigPicture(description) {
-  console.log("Set big picture", description);
-  var game = ref.child(gameKey);
-  game.update({
-    'bigPicture': description
-  });
+function getPlayer() {
+  if (playerToken !== '') {
+    return playerToken;
+  }
+  else {
+    return getURLParameter('player');
+  }
 }
 
-/**
- * description: item to add
- * location: 'yes' or 'no'
- */
-function addToPalette(description, location) {
-  var palette = ref.child(gameKey).child('palette/' + location);
-  palette.push().set({description: description});
+function invalidTurn() {
+  Materialize.toast('You are not currently the lens', 4000);
 }
 
 /**
@@ -106,6 +104,39 @@ function setLens(key) {
   });
 }
 
+function switchLens() {
+  var players = ref.child(gameKey).child('players');
+  players.once('value', function(snapshot) {
+    var playerList = _.keys(snapshot.val());
+    var current = _.indexOf(playerList, currentPlayer);
+    var next = current < playerList.length - 2 ? current + 1 : 0;
+    console.log(current, 'current', next, 'next', playerList.length, 'length');
+    setLens(playerList[next]);
+  });
+}
+
+/**
+ * description: new big picture
+ */
+function setBigPicture(description) {
+  console.log("Set big picture", description);
+  var game = ref.child(gameKey);
+  game.update({
+    'bigPicture': description
+  });
+  switchLens();
+}
+
+/**
+ * description: item to add
+ * location: 'yes' or 'no'
+ */
+function addToPalette(description, location) {
+  var palette = ref.child(gameKey).child('palette/' + location);
+  palette.push().set({description: description});
+  switchLens();
+}
+
 /**
  * i: which epoch (0 - 5)
  * title: title of event
@@ -118,6 +149,7 @@ function addEpoch(i, title, color) {
     title: title,
     color: color
   });
+  switchLens();
 }
 
 /**
@@ -133,6 +165,7 @@ function addEvent(i, title, color) {
     title: title,
     color: color
   });
+  switchLens();
   return event.key();
 }
 
@@ -149,6 +182,7 @@ function addScene(i, key, question) {
     question: question,
     answer: ''
   });
+  switchLens();
   return scene.key();
 }
 

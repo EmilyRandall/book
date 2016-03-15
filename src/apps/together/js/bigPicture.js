@@ -1,6 +1,11 @@
 var BigPicture = React.createClass({
   handleClick: function() {
-    $('#big-picture-modal').openModal();
+    if (currentPlayer === getPlayer()) {
+      $('#big-picture-modal').openModal();
+    }
+    else {
+      invalidTurn();
+    }
   },
   
   render: function() {

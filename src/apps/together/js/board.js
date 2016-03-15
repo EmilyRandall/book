@@ -45,9 +45,14 @@ var Board = React.createClass({
    * isEpoch: create epoch or event
    */
   openModal: function(i, isEpoch) {
-    var id = isEpoch ? this.state.epochModalId : this.state.eventModalId;
-    $('#' + id).openModal();
-    this.setState({epoch: i});
+    if (currentPlayer === getPlayer()) {
+      var id = isEpoch ? this.state.epochModalId : this.state.eventModalId;
+      $('#' + id).openModal();
+      this.setState({epoch: i});
+    }
+    else {
+      invalidTurn();
+    }
   },
   
   render: function() {

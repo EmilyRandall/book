@@ -111,7 +111,12 @@
   }
   
   var showPaletteModal = function(type) {
-    $('#' + type + '-modal').openModal();
+    if (currentPlayer === getPlayer()) {
+      $('#' + type + '-modal').openModal();
+    }
+    else {
+      invalidTurn();
+    }
   }
   
   var addPalette = function(type) {

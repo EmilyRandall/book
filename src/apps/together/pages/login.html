@@ -39,8 +39,8 @@
 <script>
   var name;
   var token;
-  var onSuccess = function() {
-    window.location.href='?key=' + token + '#intro';
+  var onSuccess = function(player) {
+    window.location.href='?key=' + token + '&player=' + player + '#intro';
   }
   var onFailure = function() {
     Materialize.toast('Invalid access token, please try again', 4000);
