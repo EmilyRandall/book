@@ -60,23 +60,6 @@ function joinGame(name, token, onSuccess, onFailure) {
   });
 }
 
-/**
- * name: name of player leaving
- */
-function leaveGame(name) {
-  console.log('leave', name);
-  var game = ref.child(gameKey);
-  game.child('players').once('value', function(snapshot){
-    var players = snapshot.val();
-    _.keys(players).forEach(function(key) {
-      if (players[key].name === name) {
-        game.child('players').child(key).remove();
-        playerToken = '';
-      }
-    });
-  });
-}
-
 function getPlayer() {
   if (playerToken !== '') {
     return playerToken;
@@ -110,9 +93,19 @@ function switchLens() {
     var playerList = _.keys(snapshot.val());
     var current = _.indexOf(playerList, currentPlayer);
     var next = current < playerList.length - 2 ? current + 1 : 0;
-    console.log(current, 'current', next, 'next', playerList.length, 'length');
     setLens(playerList[next]);
   });
+}
+
+function leaveGame() {
+  console.log('leave game');
+  var key = getPlayer();
+  var game = ref.child(gameKey);
+  if (key === currentPlayer) {
+    switchLens();
+  }
+  game.child('players/' + key).remove();
+  window.location.assign(window.location.pathname + '#login');
 }
 
 /**
