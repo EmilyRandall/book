@@ -49,6 +49,10 @@ body {
   text-align: center;
 }
 
+.card a {
+  color: #73310e;
+}
+
 .period {
   background-color: rgba(41, 145, 73, 0.8);
   height: 110px;
@@ -81,6 +85,10 @@ body {
   background: -o-linear-gradient(#ab4f1e, #73310e); /* For Opera 11.1 to 12.0 */
   background: -moz-linear-gradient(#ab4f1e, #73310e); /* For Firefox 3.6 to 15 */
   background: linear-gradient(#ab4f1e, #73310e); /* Standard syntax */
+  color: #f6cfa1;
+}
+
+.header a {
   color: #f6cfa1;
 }
 
