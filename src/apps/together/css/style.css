@@ -6,6 +6,10 @@ body {
   background-size: cover;
 }
 
+h6 {
+  margin-bottom: 30px;
+}
+
 /* label color */
 .input-field label {
   color: #565656;

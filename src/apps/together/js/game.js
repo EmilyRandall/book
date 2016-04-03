@@ -175,7 +175,6 @@ function addScene(i, key, question) {
     question: question,
     answer: ''
   });
-  switchLens();
   return scene.key();
 }
 
@@ -191,4 +190,5 @@ function answerSceneQuestion(i, eventKey, sceneKey, answer) {
   scene.update({
     answer: answer
   });
+  switchLens();
 }
